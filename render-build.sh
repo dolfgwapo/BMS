@@ -6,5 +6,5 @@ export PATH="$HOME/.bun/bin:$PATH"
 # Install dependencies
 bun install
 
-# Build the project (if needed)
-bun run build
+# Run database migrations
+bun run db:push
