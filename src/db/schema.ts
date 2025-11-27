@@ -6,8 +6,9 @@ export const users = pgTable("users", {
   firstName: varchar("first_name", { length: 100 }).notNull(),
   lastName: varchar("last_name", { length: 100 }).notNull(),
   username: varchar("username", { length: 50 }).notNull().unique(),
+  email: varchar("email", { length: 100 }).unique(), // Added for cloud auth
   password: varchar("password", { length: 255 }).notNull(),
-  role: varchar("role", { length: 20 }).notNull(), // Admin, Officer, User
+  role: varchar("role", { length: 20 }).notNull(), // Admin, Officer, User, Client
   badgeNumber: varchar("badge_number", { length: 50 }),
   profilePhotoUri: text("profile_photo_uri"),
   isActive: boolean("is_active").default(true),
@@ -275,4 +276,17 @@ export const summons = pgTable("summons", {
   servedDate: varchar("served_date", { length: 50 }),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Cloud Reports Table (for cloud-specific features)
+export const reports = pgTable("reports", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  status: varchar("status", { length: 50 }).default("pending"), // pending, assigned, in_progress, resolved
+  priority: varchar("priority", { length: 20 }).default("medium"), // low, medium, high
+  clientId: integer("client_id"), // References users.id
+  assignedOfficerId: integer("assigned_officer_id"), // References users.id
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });

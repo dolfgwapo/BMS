@@ -21,6 +21,8 @@ import { resolutionsRoutes } from "./routes/resolutions";
 import { activityLogsRoutes } from "./routes/activityLogs";
 import { notificationsRoutes } from "./routes/notifications";
 import { respondentsRoutes } from "./routes/respondents";
+import { cloudReports } from './cloud/routes/reports.js';
+import { cloudAuth } from './cloud/routes/auth.js';
 
 export const app = new Elysia()
   .use(
@@ -85,6 +87,8 @@ export const app = new Elysia()
       .use(activityLogsRoutes)
       .use(notificationsRoutes)
       .use(respondentsRoutes)
+      .use(cloudAuth)
+      .use(cloudReports)
   )
   .listen(process.env.PORT || 3000);
 
